@@ -1,0 +1,76 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+
+
+url="https://www.listchallenges.com/top-1000-greatest-movies-of-all-time-by-imdb"
+
+lista=list()
+
+for num in range(1,26):
+    if num == 1:
+        pass
+    elif num == 2:
+        url=url+"/list/"+str(num)
+    elif num > 2 and num <11:
+        url=url[:-1]
+        url+=str(num)
+    else:
+        url=url[:-2]
+        url+=str(num)
+        
+    print(url)
+    
+    r=requests.get(url)
+    c=r.content
+    l=[]
+    soup=BeautifulSoup(c,"html.parser")
+    imena=soup.find("div", {"class":"checklist-listItems clearfix"}) # div class="mw-category-generated"
+
+    #print(imena)
+
+    imena=imena.find_all("div",{"class":"list-item view-small-image "})
+    #print(imena)
+
+    for i in imena:
+        #i=i.get_text
+        i=i.find("div",{"class":"item-name"})
+        i=i.get_text()
+
+        if "\r"in i:
+            i=i.replace("\r","")
+        if "\n" in i:
+            i=i.replace("\n","")
+
+        if "\t" in i:
+            i=i.replace("\t","")
+        #print(i)
+        print
+        if "Monty Python's Life of Brian" in i:
+            i="Monty Python's Life of Brian"
+        elif "Three Colors: Red" in i:
+            i="Three Colors: Red"
+        elif "Three Colors: White" in i:
+            i="Three Colors: Red"
+            
+        elif "Lust, Caution" in i:
+            i="Lust, Caution"
+            
+        elif "From Russia With Love" in i:
+            i="From Russia With Love"
+        
+        elif "Bram Stoker's Dracula" in i:
+            i="Bram Stoker's Dracula"
+        elif "Excalibur" in i:
+            i="Excalibur"
+        elif '(' and ')' in i[-7:]: 
+            i=i[:-7]
+        else:
+            pass
+        lista.append(i)
+        #print(i)
+    
+lista    
+
+with open('filmovi.json', 'w') as outfile:
+    json.dump(lista, outfile)
