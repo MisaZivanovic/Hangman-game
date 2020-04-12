@@ -1,0 +1,218 @@
+import random
+
+
+# functions
+
+def empty(wrd):
+    
+    word_length=len(wrd)
+
+    print(word_length*" "+word_length*"_")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")
+    
+def head(wrd):
+    #prints a head
+    word_length=len(wrd)
+    
+    print(word_length*" "+word_length*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")    
+    
+def body(wrd):
+    #prints a head and a body
+    word_length=len(wrd)
+    
+    print(word_length*" "+word_length*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(word_length*" "+"|"+word_length*" "+"|")
+    print(word_length*"  "+ " |")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")
+    
+def one_leg(wrd):
+
+    #prints a head, a body and one leg
+    word_length=len(wrd)
+
+    half_of_it = len(word)*" "
+
+    print(word_length*" "+(word_length+1)*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(word_length*" "+"|"+word_length*" "+"|")
+    print(half_of_it[:-1]  + "/" +" "+word_length*" "+"|")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")
+    
+    
+def two_legs(wrd):
+    #prints a head, a body and 2 legs
+    word_length=len(wrd)
+
+    half_of_it = len(word)*" "
+
+    print(word_length*" "+(word_length+1)*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(word_length*" "+"|"+word_length*" "+"|")
+    print(half_of_it[:-1] + "/" +" "+"\\"+half_of_it[:-1]+"|")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")
+    
+def one_arm(wrd):
+    #prints a head, a body, an arm and 2 legs
+    word_length=len(wrd)
+
+    half_of_it = len(word)*" " 
+
+    print(word_length*" "+(word_length+1)*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(half_of_it[:-1]+"/"+ "|"+half_of_it+"|")
+    print(half_of_it[:-1]  + "/" +" "+"\\"+half_of_it[:-1]+"|")
+    print(word_length*"  "+ " |")
+    #print(word_length*"_ "+" |")
+    
+def fail(wrd):
+
+    #prinst the whole hangman the word, and tells the player that he/she has failed!!!
+    word_length=len(wrd)
+
+    half_of_it = len(word)*" "
+
+    print(word_length*" "+(word_length+1)*"_")
+    print(word_length*" "+"O"+word_length*" "+"|")
+    print(half_of_it[:-1]+"/"+ "|"+"\\"+half_of_it[:-1]+"|")
+    print(half_of_it[:-1]  + "/" +" "+"\\"+half_of_it[:-1]+"|")
+    print(word_length*"  "+ " |")
+    #print(half_of_it+str(wrd)+" |")
+    
+
+
+# functions end here
+
+
+print("Hi. What is your name?")
+
+name = input()
+
+print("Well " +name+ " nice to meet you, we will play a hangman game. Are you ready?")
+
+print("It is a movie")
+
+
+word = "Mrak film"
+word = "Dragon ball z"
+broj_pokusaja = 0
+
+# the_word=list()
+
+# for i in word:
+#     if i == " ":
+#         the_word.append(" ")
+#     else:
+#         the_word.append("_")
+    
+# the_word="".join(the_word)
+the_word=""
+for ltr in word:
+    #print(ltr)
+    if ltr == " ":
+        the_word+=" "
+    elif ltr ==",":
+        the_word+=","
+    else:
+        the_word+="*"
+#print(ltr)
+ 
+#print(word)
+#print(the_word)
+#print("")
+#print("")
+#print("")
+
+
+while broj_pokusaja < 7:
+    
+    try:
+        if the_word == word:
+            
+            
+            print(word)
+            print("You have won motherfucker!")
+            break
+    except:
+        pass
+        
+    print("You have "+ str(6-broj_pokusaja) +" tries left")
+    if broj_pokusaja == 0:
+        empty(word)
+        print("")
+        print(the_word)
+        
+    letter= input()
+    
+    while len(letter)>1:
+        print("Only one letter, please")
+        letter=input()
+        if len(letter)==1:
+            break
+    
+    if letter not in word:
+        broj_pokusaja = broj_pokusaja + 1
+
+        print("There is no " + letter + " in the name of this movie")
+        print(" ")
+    
+    else:
+        the_word=list(the_word)
+        for num in enumerate(word.lower()):
+            #print(num)
+            #print(the_word[num[0]])
+            if letter.lower() in num:
+                the_word[num[0]]=letter
+                #print(the_word[num[0]])
+                pass
+            else:
+                #the_word=the_word.replace(the_word[num[0]],num[1])
+                #print(letter)
+                pass
+        the_word="".join(the_word)
+        
+        
+    if broj_pokusaja == 1:
+        
+        head(word)
+        print("")
+        print(the_word)
+        
+    elif broj_pokusaja == 2:
+        body(word)
+        print("")
+        print(the_word)
+    elif broj_pokusaja == 3:
+        one_leg(word)
+        print("")
+        print(the_word)
+    elif broj_pokusaja == 4:
+        two_legs(word)
+        print("")
+        print(the_word)
+    elif broj_pokusaja == 5:
+        one_arm(word)
+        print("")
+        print(the_word)
+    elif broj_pokusaja == 6:
+        fail(word)
+        
+        print(" ")
+        print("YOU HAVE FAILED!!!!")
+        break
+     
+    
+    print("You have chosen "+letter)
+    print(" ")
