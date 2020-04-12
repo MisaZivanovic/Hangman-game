@@ -162,7 +162,7 @@ while broj_pokusaja < 7:
         if len(letter)==1:
             break
     
-    if letter not in word:
+    if letter.lower() not in word.lower():
         broj_pokusaja = broj_pokusaja + 1
 
         print("There is no " + letter + " in the name of this movie")
@@ -170,11 +170,11 @@ while broj_pokusaja < 7:
     
     else:
         the_word=list(the_word)
-        for num in enumerate(word.lower()):
+        for num in enumerate(word):
             #print(num)
             #print(the_word[num[0]])
-            if letter.lower() in num:
-                the_word[num[0]]=letter
+            if letter.lower() in num or letter.upper() in num:
+                the_word[num[0]]=num[1]
                 #print(the_word[num[0]])
                 pass
             else:
@@ -215,4 +215,5 @@ while broj_pokusaja < 7:
      
     
     print("You have chosen "+letter)
+    print(" ")
     print(" ")
