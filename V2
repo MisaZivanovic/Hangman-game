@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
 import random
 import json
 
@@ -96,35 +102,7 @@ def fail(wrd):
 
 # functions end here
 
-with open("filmovi.json") as json_file:
-    data=json.load(json_file)
-    
 
-#word = "Mrak film"
-#word = "Dragon ball z"
-
-word=random.choice(data)
-
-broj_pokusaja = 0
-
-used=list()
-
-the_word=""
-for ltr in word:
-    
-    if ltr == " " or ltr == ":" or ltr=="'" or ltr ==",":
-        the_word+=ltr
-#     elif ltr ==":":
-#         the_word+=":"
-#     elif ltr=="'":
-#         the_word+="'"
-            
-#     elif ltr ==",":
-#         the_word+=","
-    else:
-        the_word+="*"
-#print(ltr)
- 
 
 print("Hi. What is your name?")
 
@@ -134,10 +112,46 @@ print("Well " +name+ " nice to meet you, do you wanna play a hangman game?")
 
 
 answer=""
+
+
 while answer != "n":
-    
-    
-    
+
+
+
+
+    with open("filmovi.json") as json_file:
+        data=json.load(json_file)
+
+
+    #word = "Mrak film"
+    #word = "Dragon ball z"
+
+    word=random.choice(data)
+
+    broj_pokusaja = 0
+
+    used=list()
+
+    the_word=""
+    for ltr in word:
+
+        if ltr == " " or ltr == ":" or ltr=="'" or ltr ==",":
+            the_word+=ltr
+    #     elif ltr ==":":
+    #         the_word+=":"
+    #     elif ltr=="'":
+    #         the_word+="'"
+
+    #     elif ltr ==",":
+    #         the_word+=","
+        else:
+            the_word+="*"
+    #print(ltr)
+
+
+
+
+
     answer=input()
     
     try:
@@ -209,36 +223,36 @@ while answer != "n":
                     print("")
                     print(the_word)
                     print("")
-                    print("You have used "+ ",".join(used))
-                    print(" ")
+                    #print("You have used "+ ",".join(used))
+                    #print(" ")
                 elif broj_pokusaja == 2:
                     body(word)
                     print("")
                     print(the_word)
                     print("")
-                    print("You have used "+ ",".join(used))
-                    print(" ")
+                    #print("You have used "+ ",".join(used))
+                    #print(" ")
                 elif broj_pokusaja == 3:
                     one_leg(word)
                     print("")
                     print(the_word)
                     print("")
-                    print("You have used "+ ",".join(used))
-                    print("")
+                    #print("You have used "+ ",".join(used))
+                    #print("")
                 elif broj_pokusaja == 4:
                     two_legs(word)
                     print("")
                     print(the_word)
                     print("")
-                    print("You have used "+ ",".join(used))
-                    print("")
+                    #print("You have used "+ ",".join(used))
+                    #print("")
                 elif broj_pokusaja == 5:
                     one_arm(word)
                     print("")
                     print(the_word)
                     print("")
-                    print("You have used "+ ",".join(used))
-                    print(" ")
+                    #print("You have used "+ ",".join(used))
+                    #print(" ")
                 elif broj_pokusaja == 6:
                     fail(word)
 
@@ -251,7 +265,8 @@ while answer != "n":
                     print("Wanna play again?")
                     break
                     
-
+                print("")
+                print("You have used "+ ",".join(used))
                 
         elif answer =="n":
             print("Well maybe next time :)")
@@ -259,10 +274,11 @@ while answer != "n":
             print("Have a nice day.")
             break 
         else:
-            print("well that is not acceptable value")
+            print("well that is not an acceptable value")
             print("")
             print("Type in y for Yes or n for No")
     except ValueError:
         print('Sorry, that is not an acceptable value, try again.')
         print("")
         print("Type in y for Yes or n for No")
+
