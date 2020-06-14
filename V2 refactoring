@@ -1,0 +1,161 @@
+import random
+import json
+
+def cica_glisa(broj_pokusaja):
+    
+    recnik[broj_pokusaja]=recnik2[broj_pokusaja]
+
+def mistake():
+    print("Sorry, that is not an acceptable value")
+    print("")
+    print("Type in y for Yes or n for No")
+
+def board(wrd):
+    word_length=len(wrd)
+    half_of_it = len(word)*" "
+
+    #prints the whole hangman the word, and tells the player that he/she has failed!!!
+    print(word_length*" "+(word_length+1)*"_")
+    print(word_length*" "+recnik[1]+word_length*" "+"|")
+    print(half_of_it[:-1]+recnik[2]+ recnik[3]+recnik[4]+half_of_it[:-1]+"|")
+    print(half_of_it[:-1]  + recnik[5] +" "+recnik[6]+half_of_it[:-1]+"|")
+    print(word_length*"  "+ " |")
+# functions end here
+
+recnik={
+    1:" ",
+    2:" ",
+    3:" ",
+    4:" ",
+    5:" ",
+    6:" ",
+    
+}
+
+recnik2 ={
+    1:"O",
+    2:"/",
+    3:"|",
+    4:"\\",
+    5:"/",
+    6:"\\"    
+}
+
+print("Hi. What is your name?")
+
+name = input()
+
+print("Well " +name+ " nice to meet you, do you wanna play a hangman game?")
+
+answer=""
+
+while answer != "n":
+
+    with open("filmovi.json") as json_file:
+        data=json.load(json_file)
+
+    word=random.choice(data)
+
+    broj_pokusaja = 0
+
+    used=list()
+
+    the_word=""
+    for ltr in word:
+        
+        if ltr in [" ", ":","'", ","]:
+            the_word+=ltr
+        else:
+            the_word+="*"
+
+    answer=input()
+    
+    try:
+        if answer.lower() in ["y","yes"]:
+            while broj_pokusaja < 7:
+                try:
+                    if the_word == word:
+                        print(word)
+                        print("You have won motherfucker!")
+                        print("")
+                        print("Wanna play again?")
+                        break
+       
+                except:
+                    pass
+
+                print("You have "+ str(6-broj_pokusaja) +" tries left")
+                if broj_pokusaja == 0:
+                    board(word)
+                    print("")
+                    print(the_word)
+
+                letter= input()
+
+                while len(letter)>1:
+                    print("Only one letter, please")
+                    letter=input()
+                    if len(letter)==1:
+                        break
+                
+                print("You have chosen "+letter)
+                print("")
+                print("")
+                
+                used.append(letter.upper())
+
+                if letter.lower() not in word.lower():
+                    broj_pokusaja += 1
+                    
+                    
+                    cica_glisa(broj_pokusaja)
+
+                    print("There is no " + letter + " in the name of this movie")
+                    print(" ")
+
+                else:
+                    the_word=list(the_word)
+                    for num in enumerate(word):
+                        #print(num)
+                        #print(the_word[num[0]])
+                        if letter.lower() in num or letter.upper() in num:
+                            the_word[num[0]]=num[1]
+                            #print(the_word[num[0]])
+                            pass
+                        else:
+                            #the_word=the_word.replace(the_word[num[0]],num[1])
+                            #print(letter)
+                            pass
+                    the_word="".join(the_word)
+
+                if broj_pokusaja in range(1,6):
+                    
+                    board(word)
+                    print("")
+                    print(the_word)
+                    print("")
+                    
+                elif broj_pokusaja == 6:
+                    board(word)
+
+                    print("")
+                    print("YOU HAVE FAILED!!!!")
+                    print("The name of the movie is "+word)
+                    print("")
+                    print("You suck!!!")
+                    print("")
+                    print("Wanna play again?")
+                    break
+                    
+                print("")
+                print("You have used "+ ",".join(used))
+                
+        elif answer.lower() in ["n","no"]:
+            print("Well maybe next time :)")
+            print("")
+            print("Have a nice day.")
+            break 
+        else:
+            mistake()
+    except ValueError:
+        mistake()
